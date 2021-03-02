@@ -1,7 +1,6 @@
 package org.primefaces.showcase.service;
 
-import ec.gob.superbancos.srbi.persistence.model.Menu;
-import ec.gob.superbancos.srbi.persistence.model.Usuario;
+import com.oxi.persistence.model.Menu;
 import org.primefaces.showcase.common.RestClient;
 
 import javax.annotation.PostConstruct;

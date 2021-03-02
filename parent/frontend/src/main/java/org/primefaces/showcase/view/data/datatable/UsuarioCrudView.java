@@ -1,6 +1,6 @@
 package org.primefaces.showcase.view.data.datatable;
 
-import ec.gob.superbancos.srbi.persistence.model.Usuario;
+import com.oxi.persistence.model.Usuario;
 import org.primefaces.PrimeFaces;
 import org.primefaces.showcase.service.UsuarioService;
 

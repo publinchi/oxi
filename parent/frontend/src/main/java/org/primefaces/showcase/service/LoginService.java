@@ -1,6 +1,6 @@
 package org.primefaces.showcase.service;
 
-import ec.gob.superbancos.srbi.persistence.model.Usuario;
+import com.oxi.persistence.model.Usuario;
 import org.primefaces.showcase.common.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
