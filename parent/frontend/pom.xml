@@ -188,8 +188,8 @@
             <version>${owasp-sanitizer.version}</version>
         </dependency>
         <dependency>
-            <groupId>ec.gob.superbancos.srbi</groupId>
-            <artifactId>srbi-entity</artifactId>
+            <groupId>com.oxi</groupId>
+            <artifactId>entity</artifactId>
             <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
@@ -219,7 +219,7 @@
     </repositories>
 
     <build>
-        <finalName>srbi-frontend</finalName>
+        <finalName>frontend</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
