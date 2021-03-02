@@ -1,6 +1,6 @@
 package org.primefaces.showcase.service;
 
-import ec.gob.superbancos.srbi.persistence.model.Usuario;
+import com.oxi.persistence.model.Usuario;
 import org.primefaces.showcase.common.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

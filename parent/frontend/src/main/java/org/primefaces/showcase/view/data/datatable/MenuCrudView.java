@@ -1,6 +1,6 @@
 package org.primefaces.showcase.view.data.datatable;
 
-import ec.gob.superbancos.srbi.persistence.model.Menu;
+import com.oxi.persistence.model.Menu;
 import org.primefaces.PrimeFaces;
 import org.primefaces.showcase.service.MenuService;
 

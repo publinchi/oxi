@@ -6,9 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="backend" />
+        <module name="srbi-backend" />
         <module name="srbi-frontend" />
         <module name="srbi-entity" />
-        <module name="srbi-backend" />
+        <module name="entity" />
+        <module name="frontend" />
       </profile>
     </annotationProcessing>
   </component>

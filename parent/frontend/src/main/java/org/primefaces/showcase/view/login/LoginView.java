@@ -5,7 +5,7 @@
  */
 package org.primefaces.showcase.view.login;
 
-import ec.gob.superbancos.srbi.persistence.model.Usuario;
+import com.oxi.persistence.model.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.PrimeFaces;
@@ -19,7 +19,6 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
