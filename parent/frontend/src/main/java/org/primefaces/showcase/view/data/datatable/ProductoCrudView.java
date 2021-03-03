@@ -81,7 +81,7 @@ public class ProductoCrudView implements Serializable {
         this.selectedProducto = null;
 
         PrimeFaces.current().executeScript("PF('manageProductoDialog').hide()");
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-Productos");
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-productos");
     }
 
     public void delete() {
@@ -91,7 +91,7 @@ public class ProductoCrudView implements Serializable {
             this.selectedProductos.remove(this.selectedProducto);
         this.selectedProducto = null;
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto Removido"));
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-Productos");
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-productos");
     }
 
     public void findAll() {
@@ -112,15 +112,15 @@ public class ProductoCrudView implements Serializable {
     }
 
     public void deleteSelectedProductos() {
-        for (Producto Producto : this.selectedProductos) {
-            this.productoService.delete(Producto);
+        for (Producto producto : this.selectedProductos) {
+            this.productoService.delete(producto);
         }
 
         this.productos.removeAll(this.selectedProductos);
         this.selectedProductos = null;
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Productos removidos"));
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-Productos");
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-productos");
         PrimeFaces.current().executeScript("PF('dtProductos').clearFilters()");
     }
 
