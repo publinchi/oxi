@@ -13,7 +13,7 @@ public class Producto implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private String lote;
     private String serie;
     @JsonDeserialize(using = MultiDateDeserializer.class)
@@ -25,7 +25,6 @@ public class Producto implements Serializable {
     @JsonDeserialize(using = MultiDateDeserializer.class)
     @Column(name = "fecha_salida")
     private Date fechaSalida;
-    @JsonDeserialize(using = MultiDateDeserializer.class)
     @Column(name = "registro_sanitario")
     private String registroSanitario;
     private String cantidad;
@@ -35,11 +34,11 @@ public class Producto implements Serializable {
 
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
