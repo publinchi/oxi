@@ -59,7 +59,7 @@ public class ProductoCrudView implements Serializable {
     }
 
     public void save() {
-        if (Objects.nonNull(this.selectedProducto) && this.selectedProducto.getId() <= 0) {
+        if (this.selectedProducto.getId() <= 0) {
             this.selectedProducto.setFechaIngreso(Calendar.getInstance().getTime());
             Producto producto = this.productoService.save(this.selectedProducto);
             if(Objects.nonNull(producto)) {
