@@ -42,9 +42,9 @@
                             <span style="font-weight: bold">PRODUCTOS</span>
 
                             <span class="filter-container ui-input-icon-left">
-                        <i class="pi pi-search"></i>
-                        <p:inputText id="globalFilter" onkeyup="PF('dtProductos').filter()" placeholder="Search"/>
-                    </span>
+                                <i class="pi pi-search"></i>
+                                <p:inputText id="globalFilter" onkeyup="PF('dtProductos').filter()" placeholder="Search"/>
+                            </span>
 
                         </div>
                     </f:facet>
@@ -102,6 +102,10 @@
                                          oncomplete="PF('deleteProductoDialog').show()">
                             <f:setPropertyActionListener value="#{producto}" target="#{productoCrudView.selectedProducto}"/>
                         </p:commandButton>
+                        <p:commandButton class="warning-button rounded-button" icon="pi pi-money-bill" process="@this"
+                                         oncomplete="PF('sellProductoDialog').show()" disabled="#{not empty producto.fechaSalida}">
+                            <f:setPropertyActionListener value="#{producto}" target="#{productoCrudView.selectedProducto}"/>
+                        </p:commandButton>
                     </p:column>
 
                 </p:dataTable>
@@ -119,12 +123,16 @@
                                 <p:inputText id="serie" value="#{productoCrudView.selectedProducto.serie}" required="true"/>
                             </div>
                             <div class="p-field">
+                                <p:outputLabel for="fechaCad" value="Fecha Caducidad"/>
+                                <p:datePicker id="fechaCad" value="#{productoCrudView.selectedProducto.fechaCaducidad}" required="true" />
+                            </div>
+                            <div class="p-field">
                                 <p:outputLabel for="registro">Registro Sanitario</p:outputLabel>
                                 <p:inputText id="registro" value="#{productoCrudView.selectedProducto.registroSanitario}" required="true"/>
                             </div>
                             <div class="p-field">
                                 <p:outputLabel for="descripcion">Descripción</p:outputLabel>
-                                <p:inputText id="descripcion" value="#{productoCrudView.selectedProducto.descripcion}" required="true"/>
+                                <p:inputTextarea id="descripcion" value="#{productoCrudView.selectedProducto.descripcion}" required="true"/>
                             </div>
                         </p:outputPanel>
                     </p:outputPanel>
@@ -144,6 +152,14 @@
                                      update=":form:delete-productos-button"/>
                     <p:commandButton value="No" type="button" styleClass="secondary-button" icon="pi pi-times"
                                      onclick="PF('deleteProductoDialog').hide()"/>
+                </p:confirmDialog>
+                
+                <p:confirmDialog widgetVar="sellProductoDialog" showEffect="fade" width="300"
+                                 message="Desea vender el producto?" header="Confirmación" severity="warn">
+                    <p:commandButton value="Si" icon="pi pi-check" actionListener="#{productoCrudView.sell}"
+                                     process="@this" oncomplete="PF('sellProductoDialog').hide()"/>
+                    <p:commandButton value="No" type="button" styleClass="secondary-button" icon="pi pi-times"
+                                     onclick="PF('sellProductoDialog').hide()"/>
                 </p:confirmDialog>
 
                 <p:confirmDialog global="true" showEffect="fade" width="300">
