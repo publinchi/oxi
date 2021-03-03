@@ -1,0 +1,166 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        ADMINISTRACIÓN PRODUCTO - <span class="subitem">PRODUCTO</span>
+    </ui:define>
+
+    <ui:define name="description">
+        <!--This example demonstrates a simple but common usage of posting the form, updating the backend value and displaying the output with ajax.-->
+    </ui:define>
+
+    <ui:define name="implementation">
+        <h:form id="form">
+            <div class="card crud-demo">
+                <p:growl id="messages" showDetail="true"/>
+
+                <div class="products-buttonbar">
+                    <div>
+                        <p:commandButton value="Nuevo" icon="pi pi-plus" actionListener="#{productoCrudView.openNew()}"
+                                         update=":form:manage-producto-content" oncomplete="PF('manageProductoDialog').show()"
+                                         styleClass="success-button" style="margin-right: .5rem"/>
+                        <p:commandButton id="delete-productos-button" value="#"
+                                         icon="pi pi-trash" actionListener="#"
+                                         styleClass="danger-button" disabled="#{!productoCrudView.hasSelectedProductos()}"
+                                         update="@this">
+                            <p:confirm header="Confirmación" message="Eliminar el producto seleccionado?"
+                                       icon="pi pi-exclamation-triangle"/>
+                        </p:commandButton>
+                    </div>
+                </div>
+
+                <p:dataTable id="dt-productos" widgetVar="dtProductos" var="producto" value="#{productoCrudView.productos}"
+                             reflow="true" styleClass="products-table"
+                             selection="#{productoCrudView.selectedProductos}" rowKey="#{producto.id}" paginator="true"
+                             rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">PRODUCTOS</span>
+
+                            <span class="filter-container ui-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PF('dtProductos').filter()" placeholder="Search"/>
+                    </span>
+
+                        </div>
+                    </f:facet>
+
+                    <p:ajax event="rowSelect" update=":form:delete-productos-button"/>
+                    <p:ajax event="rowUnselect" update=":form:delete-productos-button"/>
+                    <p:ajax event="rowSelectCheckbox" update=":form:delete-productos-button"/>
+                    <p:ajax event="rowUnselectCheckbox" update=":form:delete-productos-button"/>
+                    <p:ajax event="toggleSelect" update=":form:delete-productos-button"/>
+
+                    <p:column selectionMode="multiple" exportable="false"></p:column>
+
+                    <p:column headerText="Id" sortBy="#{producto.id}" filterBy="#{producto.id}">
+                        <h:outputText value="#{producto.id}"/>
+                    </p:column>
+                    <p:column headerText="Lote" sortBy="#{producto.lote}" filterBy="#{producto.lote}">
+                        <h:outputText value="#{producto.lote}"/>
+                    </p:column>
+                    <p:column headerText="Serie" sortBy="#{producto.serie}">
+                        <h:outputText value="#{producto.serie}"/>
+                    </p:column>
+                    <p:column headerText="F. de Caducidad" sortBy="#{producto.fechaCaducidad}"
+                              filterBy="#{producto.fechaCaducidad}">
+                        <h:outputText value="#{producto.fechaCaducidad}">
+                            <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="F. de Ingreso" sortBy="#{producto.fechaIngreso}"
+                              filterBy="#{producto.fechaIngreso}">
+                        <h:outputText value="#{producto.fechaIngreso}">
+                            <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="F. de Salida" sortBy="#{producto.fechaSalida}"
+                              filterBy="#{producto.fechaSalida}">
+                        <h:outputText value="#{producto.fechaSalida}">
+                            <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Registro Sanitario" sortBy="#{producto.registroSanitario}"
+                              filterBy="#{producto.registroSanitario}">
+                        <h:outputText value="#{producto.registroSanitario}"/>
+                    </p:column>
+                    <p:column headerText="Cantidad" sortBy="#{producto.cantidad}"
+                              filterBy="#{producto.cantidad}">
+                        <h:outputText value="#{producto.cantidad}"/>
+                    </p:column>
+                    <p:column headerText="Descripción" sortBy="#{producto.descripcion}"
+                              filterBy="#{producto.descripcion}">
+                        <h:outputText value="#{producto.descripcion}"/>
+                    </p:column>
+                    <p:column exportable="false">
+                        <p:commandButton icon="pi pi-pencil" update=":form:manage-producto-content"
+                                         oncomplete="PF('manageProductoDialog').show()"
+                                         styleClass="edit-button rounded-button success-button" process="@this">
+                            <f:setPropertyActionListener value="#{producto}" target="#{productoCrudView.selectedProducto}"/>
+                        </p:commandButton>
+                        <p:commandButton class="warning-button rounded-button" icon="pi pi-trash" process="@this"
+                                         oncomplete="PF('deleteProductoDialog').show()">
+                            <f:setPropertyActionListener value="#{producto}" target="#{productoCrudView.selectedProducto}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:dialog header="Detalles Producto" width="450" showEffect="fade" modal="true"
+                          widgetVar="manageProductoDialog" responsive="true">
+                    <p:outputPanel id="manage-producto-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty productoCrudView.selectedProducto}">
+                            <div class="p-field">
+                                <p:outputLabel for="lote">Lote</p:outputLabel>
+                                <p:inputText id="lote" value="#{productoCrudView.selectedProducto.lote}" required="true"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="serie">Serie</p:outputLabel>
+                                <p:inputText id="serie" value="#{productoCrudView.selectedProducto.serie}" required="true"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="registro">Registro Sanitario</p:outputLabel>
+                                <p:inputText id="registro" value="#{productoCrudView.selectedProducto.registroSanitario}" required="true"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="cantidad">Cantidad</p:outputLabel>
+                                <p:inputText id="cantidad" value="#{productoCrudView.selectedProducto.cantidad}" required="true"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="descripcion">Descripción</p:outputLabel>
+                                <p:inputText id="descripcion" value="#{productoCrudView.selectedProducto.descripcion}" required="true"/>
+                            </div>
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{productoCrudView.save}"
+                                         update="manage-producto-content" process="manage-producto-content @this"/>
+                        <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageProductoDialog').hide()"
+                                         class="secondary-button"/>
+                    </f:facet>
+                </p:dialog>
+
+                <p:confirmDialog widgetVar="deleteProductoDialog" showEffect="fade" width="300"
+                                 message="Eliminar el producto?" header="Confirmación" severity="warn">
+                    <p:commandButton value="Si" icon="pi pi-check" actionListener="#{productoCrudView.delete}"
+                                     process="@this" oncomplete="PF('deleteProductoDialog').hide()"
+                                     update=":form:delete-productos-button"/>
+                    <p:commandButton value="No" type="button" styleClass="secondary-button" icon="pi pi-times"
+                                     onclick="PF('deleteProductoDialog').hide()"/>
+                </p:confirmDialog>
+
+                <p:confirmDialog global="true" showEffect="fade" width="300">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no secondary-button"
+                                     icon="pi pi-times"/>
+                </p:confirmDialog>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
