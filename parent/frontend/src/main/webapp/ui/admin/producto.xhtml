@@ -23,8 +23,8 @@
                         <p:commandButton value="Nuevo" icon="pi pi-plus" actionListener="#{productoCrudView.openNew()}"
                                          update=":form:manage-producto-content" oncomplete="PF('manageProductoDialog').show()"
                                          styleClass="success-button" style="margin-right: .5rem"/>
-                        <p:commandButton id="delete-productos-button" value="#"
-                                         icon="pi pi-trash" actionListener="#"
+                        <p:commandButton id="delete-productos-button" value="#{productoCrudView.deleteButtonMessage}"
+                                         icon="pi pi-trash" actionListener="#{productoCrudView.deleteSelectedProductos()}"
                                          styleClass="danger-button" disabled="#{!productoCrudView.hasSelectedProductos()}"
                                          update="@this">
                             <p:confirm header="Confirmación" message="Eliminar el producto seleccionado?"
