@@ -1,6 +1,6 @@
 package org.primefaces.showcase.service;
 
-import com.oxi.persistence.model.Usuario;
+import com.oxi.persistence.model.Producto;
 import org.primefaces.showcase.common.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -20,85 +19,75 @@ import java.util.*;
 
 @Named
 @ApplicationScoped
-public class UsuarioService {
+public class ProductoService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UsuarioService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProductoService.class);
 
-    List<Usuario> usuarios;
+    List<Producto> productos;
 
     @Inject
     private RestClient restClient;
 
     @PostConstruct
     public void init() {
-        usuarios = findAll();
+        productos = findAll();
     }
 
-    public List<Usuario> getUsuarios() {
+    public List<Producto> getProductos() {
         return findAll();
     }
 
-    public List<Usuario> getProducts(int size) {
+    public List<Producto> getProducts(int size) {
 
-        if (size > usuarios.size()) {
+        if (size > productos.size()) {
             Random rand = new Random();
 
-            List<Usuario> randomList = new ArrayList<>();
+            List<Producto> randomList = new ArrayList<>();
             for (int i = 0; i < size; i++) {
-                int randomIndex = rand.nextInt(usuarios.size());
-                randomList.add(usuarios.get(randomIndex));
+                int randomIndex = rand.nextInt(productos.size());
+                randomList.add(productos.get(randomIndex));
             }
 
             return randomList;
         }
 
         else {
-            return new ArrayList<>(usuarios).subList(0, size);
+            return new ArrayList<>(productos).subList(0, size);
         }
 
     }
 
-    public Usuario save(Usuario usuario) throws BadRequestException {
-        Usuario clientResponse = null;
+    public Producto save(Producto producto) throws BadRequestException {
+        Producto clientResponse = null;
 
-        if(usuario.getId() <=0) {
-            WebTarget webTarget = restClient.getWebTarget("usuarios");
+        if(producto.getId() <=0) {
+            WebTarget webTarget = restClient.getWebTarget("productos");
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            clientResponse = invocationBuilder.post(Entity.entity(usuario, MediaType.APPLICATION_JSON), Usuario.class);
+            clientResponse = invocationBuilder.post(Entity.entity(producto, MediaType.APPLICATION_JSON), Producto.class);
         } else {
-            WebTarget webTarget = restClient.getWebTarget("usuarios/" + usuario.getId());
+            WebTarget webTarget = restClient.getWebTarget("productos/" + producto.getId());
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            invocationBuilder.put(Entity.entity(usuario, MediaType.APPLICATION_JSON), Usuario.class);
+            invocationBuilder.put(Entity.entity(producto, MediaType.APPLICATION_JSON), Producto.class);
         }
 
         return clientResponse;
     }
 
-    public void delete(Usuario usuario) {
-        WebTarget webTarget = restClient.getWebTarget("usuarios/" + usuario.getId());
+    public void delete(Producto producto) {
+        WebTarget webTarget = restClient.getWebTarget("productos/" + producto.getId());
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
         invocationBuilder.delete();
     }
 
-    public Usuario find(long id) {
+    public Producto find(long id) {
         return null;
     }
 
-    public Usuario findByLogin(final String login) {
-        WebTarget webTarget = restClient.getWebTarget("usuarios/login/" + login);
-        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-        try {
-            return invocationBuilder.get(Usuario.class);
-        } catch (NotFoundException notFoundException) {
-            return null;
-        }
-    }
-
-    public List<Usuario> findAll() {
-        WebTarget webTarget = restClient.getWebTarget("usuarios");
+    public List<Producto> findAll() {
+        WebTarget webTarget = restClient.getWebTarget("productos");
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 
-        return invocationBuilder.get(new GenericType<List<Usuario>>() {});
+        return invocationBuilder.get(new GenericType<List<Producto>>() {});
     }
 
 }

@@ -1,8 +1,8 @@
 package org.primefaces.showcase.view.data.datatable;
 
-import com.oxi.persistence.model.Usuario;
+import com.oxi.persistence.model.Producto;
+import org.primefaces.showcase.service.ProductoService;
 import org.primefaces.PrimeFaces;
-import org.primefaces.showcase.service.UsuarioService;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -18,113 +18,110 @@ import java.util.Objects;
 
 @Named
 @ViewScoped
-public class UsuarioCrudView implements Serializable {
+public class ProductoCrudView implements Serializable {
 
-    private List<Usuario> usuarios;
+    private List<Producto> productos;
 
-    private Usuario selectedUsuario;
+    private Producto selectedProducto;
 
-    private List<Usuario> selectedUsuarios;
+    private List<Producto> selectedProductos;
 
     @Inject
-    private UsuarioService usuarioService;
+    private ProductoService productoService;
 
     @PostConstruct
     public void init() {
-        this.usuarios = this.usuarioService.getUsuarios();
+        this.productos = this.productoService.getProductos();
     }
 
-    public List<Usuario> getUsuarios() {
-        return usuarios;
+    public List<Producto> getProductos() {
+        return productos;
     }
 
-    public Usuario getSelectedUsuario() {
-        return selectedUsuario;
+    public Producto getSelectedProducto() {
+        return selectedProducto;
     }
 
-    public void setSelectedUsuario(Usuario selectedUsuario) {
-        this.selectedUsuario = selectedUsuario;
+    public void setSelectedProducto(Producto selectedProducto) {
+        this.selectedProducto = selectedProducto;
     }
 
-    public List<Usuario> getSelectedUsuarios() {
-        return selectedUsuarios;
+    public List<Producto> getSelectedProductos() {
+        return selectedProductos;
     }
 
-    public void setSelectedUsuarios(List<Usuario> selectedUsuarios) {
-        this.selectedUsuarios = selectedUsuarios;
+    public void setSelectedProductos(List<Producto> selectedProductos) {
+        this.selectedProductos = selectedProductos;
     }
 
     public void openNew() {
-        this.selectedUsuario = new Usuario();
+        this.selectedProducto = new Producto();
     }
 
     public void save() {
-        if (this.selectedUsuario.getId() <= 0) {
-            this.selectedUsuario.setFechaCreacion(Calendar.getInstance().getTime());
-            this.selectedUsuario.setIp("");
-            this.selectedUsuario.setContrasenia("");
-            Usuario usuario = this.usuarioService.save(this.selectedUsuario);
-            if(Objects.nonNull(usuario)) {
-                this.usuarios.add(usuario);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario Agregado"));
+        if (Objects.nonNull(this.selectedProducto) && this.selectedProducto.getId() <= 0) {
+            this.selectedProducto.setFechaIngreso(Calendar.getInstance().getTime());
+            Producto producto = this.productoService.save(this.selectedProducto);
+            if(Objects.nonNull(producto)) {
+                this.productos.add(producto);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto Agregado"));
             }
         }
         else {
-            this.selectedUsuario.setFechaModificacion(Calendar.getInstance().getTime());
             try {
-                this.usuarioService.save(this.selectedUsuario);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario Actualizado"));
+                this.productoService.save(this.selectedProducto);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto Actualizado"));
             } catch(BadRequestException badRequestException){
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         "Error al actualizar",
-                        "Usuario no pudo ser actualizado!!!"));
+                        "Producto no pudo ser actualizado!!!"));
             }
         }
 
-        this.selectedUsuario = null;
+        this.selectedProducto = null;
 
-        PrimeFaces.current().executeScript("PF('manageUsuarioDialog').hide()");
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-usuarios");
+        PrimeFaces.current().executeScript("PF('manageProductoDialog').hide()");
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-Productos");
     }
 
     public void delete() {
-        this.usuarioService.delete(this.selectedUsuario);
-        this.usuarios.remove(this.selectedUsuario);
-        if(Objects.nonNull(this.selectedUsuarios))
-            this.selectedUsuarios.remove(this.selectedUsuario);
-        this.selectedUsuario = null;
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario Removido"));
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-usuarios");
+        this.productoService.delete(this.selectedProducto);
+        this.productos.remove(this.selectedProducto);
+        if(Objects.nonNull(this.selectedProductos))
+            this.selectedProductos.remove(this.selectedProducto);
+        this.selectedProducto = null;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto Removido"));
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-Productos");
     }
 
     public void findAll() {
-        this.usuarioService.findAll();
+        this.productoService.findAll();
     }
 
     public String getDeleteButtonMessage() {
-        if (hasSelectedUsuarios()) {
-            int size = this.selectedUsuarios.size();
-            return size > 1 ? size + " Usuarios Seleccionados" : "1 Usuario Seleccionado";
+        if (hasSelectedProductos()) {
+            int size = this.selectedProductos.size();
+            return size > 1 ? size + " Productos Seleccionados" : "1 Producto Seleccionado";
         }
 
         return "Borrar";
     }
 
-    public boolean hasSelectedUsuarios() {
-        return this.selectedUsuarios != null && !this.selectedUsuarios.isEmpty();
+    public boolean hasSelectedProductos() {
+        return this.selectedProductos != null && !this.selectedProductos.isEmpty();
     }
 
-    public void deleteSelectedUsuarios() {
-        for (Usuario usuario : this.selectedUsuarios) {
-            this.usuarioService.delete(usuario);
+    public void deleteSelectedProductos() {
+        for (Producto Producto : this.selectedProductos) {
+            this.productoService.delete(Producto);
         }
 
-        this.usuarios.removeAll(this.selectedUsuarios);
-        this.selectedUsuarios = null;
+        this.productos.removeAll(this.selectedProductos);
+        this.selectedProductos = null;
 
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuarios removidos"));
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-usuarios");
-        PrimeFaces.current().executeScript("PF('dtUsuarios').clearFilters()");
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Productos removidos"));
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-Productos");
+        PrimeFaces.current().executeScript("PF('dtProductos').clearFilters()");
     }
 
 }
