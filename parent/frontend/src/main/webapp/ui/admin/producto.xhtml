@@ -88,10 +88,6 @@
                               filterBy="#{producto.registroSanitario}">
                         <h:outputText value="#{producto.registroSanitario}"/>
                     </p:column>
-                    <p:column headerText="Cantidad" sortBy="#{producto.cantidad}"
-                              filterBy="#{producto.cantidad}">
-                        <h:outputText value="#{producto.cantidad}"/>
-                    </p:column>
                     <p:column headerText="Descripción" sortBy="#{producto.descripcion}"
                               filterBy="#{producto.descripcion}">
                         <h:outputText value="#{producto.descripcion}"/>
@@ -125,10 +121,6 @@
                             <div class="p-field">
                                 <p:outputLabel for="registro">Registro Sanitario</p:outputLabel>
                                 <p:inputText id="registro" value="#{productoCrudView.selectedProducto.registroSanitario}" required="true"/>
-                            </div>
-                            <div class="p-field">
-                                <p:outputLabel for="cantidad">Cantidad</p:outputLabel>
-                                <p:inputText id="cantidad" value="#{productoCrudView.selectedProducto.cantidad}" required="true"/>
                             </div>
                             <div class="p-field">
                                 <p:outputLabel for="descripcion">Descripción</p:outputLabel>

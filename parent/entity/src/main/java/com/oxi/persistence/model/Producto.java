@@ -27,7 +27,6 @@ public class Producto implements Serializable {
     private Date fechaSalida;
     @Column(name = "registro_sanitario")
     private String registroSanitario;
-    private long cantidad;
     private String descripcion;
 
     public Producto() {
@@ -88,14 +87,6 @@ public class Producto implements Serializable {
 
     public void setRegistroSanitario(String registroSanitario) {
         this.registroSanitario = registroSanitario;
-    }
-
-    public long getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(long cantidad) {
-        this.cantidad = cantidad;
     }
 
     public String getDescripcion() {
