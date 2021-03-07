@@ -13,6 +13,7 @@ import javax.inject.Named;
 import javax.ws.rs.BadRequestException;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,6 +21,8 @@ import java.util.Objects;
 @ViewScoped
 public class ProductoCrudView implements Serializable {
 
+    private Date date;
+    
     private List<Producto> productos;
 
     private Producto selectedProducto;
@@ -34,6 +37,14 @@ public class ProductoCrudView implements Serializable {
         this.productos = this.productoService.getProductos();
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
     public List<Producto> getProductos() {
         return productos;
     }
@@ -84,6 +95,23 @@ public class ProductoCrudView implements Serializable {
         PrimeFaces.current().ajax().update("form:messages", "form:dt-productos");
     }
 
+    public void sell() {
+        try {
+            this.selectedProducto.setFechaSalida(Calendar.getInstance().getTime());
+            this.productoService.save(this.selectedProducto);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Producto Vendido"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Error al vender",
+                        "Producto no se puede vender!!!"));
+        }
+        
+        this.selectedProducto = null;
+        
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-productos");
+        
+    }
+    
     public void delete() {
         this.productoService.delete(this.selectedProducto);
         this.productos.remove(this.selectedProducto);
