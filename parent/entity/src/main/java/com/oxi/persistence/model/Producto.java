@@ -17,8 +17,8 @@ public class Producto implements Serializable {
     private String lote;
     private String serie;
     @JsonDeserialize(using = MultiDateDeserializer.class)
-    @Column(name = "fecha_caducidad")
-    private Date fechaCaducidad;
+    @Column(name = "fecha_expiracion")
+    private Date fechaExpiracion;
     @JsonDeserialize(using = MultiDateDeserializer.class)
     @Column(name = "fecha_ingreso")
     private Date fechaIngreso;
@@ -27,7 +27,22 @@ public class Producto implements Serializable {
     private Date fechaSalida;
     @Column(name = "registro_sanitario")
     private String registroSanitario;
-    private String descripcion;
+    private String observacion;
+    @Column(name = "nombre_producto")
+    private String nombreProducto;
+    @Column(name = "forma_farmaceutica")
+    private String formaFarmaceutica;
+    private String concentracion;
+    private String presentacion;
+    private String proveedor;
+    @JsonDeserialize(using = MultiDateDeserializer.class)
+    @Column(name = "fecha_elaboracion")
+    private Date fechaElaboracion;
+    @Column(name = "entregado_por")
+    private String entregadoPor;
+    @Column(name = "recibido_por")
+    private String recibidoPor;
+    private String cliente;
 
     public Producto() {
 
@@ -57,12 +72,12 @@ public class Producto implements Serializable {
         this.serie = serie;
     }
 
-    public Date getFechaCaducidad() {
-        return fechaCaducidad;
+    public Date getFechaExpiracion() {
+        return fechaExpiracion;
     }
 
-    public void setFechaCaducidad(Date fechaCaducidad) {
-        this.fechaCaducidad = fechaCaducidad;
+    public void setFechaExpiracion(Date fechaCaducidad) {
+        this.fechaExpiracion = fechaCaducidad;
     }
 
     public Date getFechaIngreso() {
@@ -89,12 +104,84 @@ public class Producto implements Serializable {
         this.registroSanitario = registroSanitario;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getObservacion() {
+        return observacion;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setObservacion(String descripcion) {
+        this.observacion = descripcion;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public String getFormaFarmaceutica() {
+        return formaFarmaceutica;
+    }
+
+    public void setFormaFarmaceutica(String formaFarmaceutica) {
+        this.formaFarmaceutica = formaFarmaceutica;
+    }
+
+    public String getConcentracion() {
+        return concentracion;
+    }
+
+    public void setConcentracion(String concentracion) {
+        this.concentracion = concentracion;
+    }
+
+    public String getPresentacion() {
+        return presentacion;
+    }
+
+    public void setPresentacion(String presentacion) {
+        this.presentacion = presentacion;
+    }
+
+    public String getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(String proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public Date getFechaElaboracion() {
+        return fechaElaboracion;
+    }
+
+    public void setFechaElaboracion(Date fechaElaboracion) {
+        this.fechaElaboracion = fechaElaboracion;
+    }
+
+    public String getEntregadoPor() {
+        return entregadoPor;
+    }
+
+    public void setEntregadoPor(String entregadoPor) {
+        this.entregadoPor = entregadoPor;
+    }
+
+    public String getRecibidoPor() {
+        return recibidoPor;
+    }
+
+    public void setRecibidoPor(String recibidoPor) {
+        this.recibidoPor = recibidoPor;
+    }
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
     }
 
     @Override

@@ -60,37 +60,75 @@
                     <p:column headerText="Id" sortBy="#{producto.id}" filterBy="#{producto.id}">
                         <h:outputText value="#{producto.id}"/>
                     </p:column>
+                    <p:column headerText="F.Ing." sortBy="#{producto.fechaIngreso}"
+                              filterBy="#{producto.fechaIngreso}">
+                        <h:outputText value="#{producto.fechaIngreso}">
+                            <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Nom." sortBy="#{producto.nombreProducto}"
+                              filterBy="#{producto.nombreProducto}">
+                        <h:outputText value="#{producto.nombreProducto}"/>
+                    </p:column>
+                    <p:column headerText="Far." sortBy="#{producto.formaFarmaceutica}"
+                              filterBy="#{producto.formaFarmaceutica}">
+                        <h:outputText value="#{producto.formaFarmaceutica}"/>
+                    </p:column>
+                    <p:column headerText="Con." sortBy="#{producto.concentracion}"
+                              filterBy="#{producto.concentracion}">
+                        <h:outputText value="#{producto.concentracion}"/>
+                    </p:column>
+                    <p:column headerText="Pre." sortBy="#{producto.presentacion}"
+                              filterBy="#{producto.presentacion}">
+                        <h:outputText value="#{producto.presentacion}"/>
+                    </p:column>
+                    <p:column headerText="Pro." sortBy="#{producto.proveedor}"
+                              filterBy="#{producto.proveedor}">
+                        <h:outputText value="#{producto.proveedor}"/>
+                    </p:column>
                     <p:column headerText="Lote" sortBy="#{producto.lote}" filterBy="#{producto.lote}">
                         <h:outputText value="#{producto.lote}"/>
                     </p:column>
                     <p:column headerText="Serie" sortBy="#{producto.serie}">
                         <h:outputText value="#{producto.serie}"/>
                     </p:column>
-                    <p:column headerText="F. de Caducidad" sortBy="#{producto.fechaCaducidad}"
-                              filterBy="#{producto.fechaCaducidad}">
-                        <h:outputText value="#{producto.fechaCaducidad}">
+                    <p:column headerText="F.Ela." sortBy="#{producto.fechaElaboracion}"
+                              filterBy="#{producto.fechaElaboracion}">
+                        <h:outputText value="#{producto.fechaElaboracion}">
                             <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="F. de Ingreso" sortBy="#{producto.fechaIngreso}"
-                              filterBy="#{producto.fechaIngreso}">
-                        <h:outputText value="#{producto.fechaIngreso}">
+                    <p:column headerText="F.Exp." sortBy="#{producto.fechaExpiracion}"
+                              filterBy="#{producto.fechaExpiracion}">
+                        <h:outputText value="#{producto.fechaExpiracion}">
                             <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="F. de Salida" sortBy="#{producto.fechaSalida}"
+                    <p:column headerText="F.Sal." sortBy="#{producto.fechaSalida}"
                               filterBy="#{producto.fechaSalida}">
                         <h:outputText value="#{producto.fechaSalida}">
                             <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Registro Sanitario" sortBy="#{producto.registroSanitario}"
+                    <p:column headerText="Reg.San." sortBy="#{producto.registroSanitario}"
                               filterBy="#{producto.registroSanitario}">
                         <h:outputText value="#{producto.registroSanitario}"/>
                     </p:column>
-                    <p:column headerText="Descripción" sortBy="#{producto.descripcion}"
-                              filterBy="#{producto.descripcion}">
-                        <h:outputText value="#{producto.descripcion}"/>
+                    <p:column headerText="Ent." sortBy="#{producto.entregadoPor}"
+                              filterBy="#{producto.entregadoPor}">
+                        <h:outputText value="#{producto.entregadoPor}"/>
+                    </p:column>
+                    <p:column headerText="Rec." sortBy="#{producto.recibidoPor}"
+                              filterBy="#{producto.recibidoPor}">
+                        <h:outputText value="#{producto.recibidoPor}"/>
+                    </p:column>
+                    <p:column headerText="Cli." sortBy="#{producto.cliente}"
+                              filterBy="#{producto.cliente}">
+                        <h:outputText value="#{producto.cliente}"/>
+                    </p:column>
+                    <p:column headerText="Obs." sortBy="#{producto.observacion}"
+                              filterBy="#{producto.observacion}">
+                        <h:outputText value="#{producto.observacion}"/>
                     </p:column>
                     <p:column exportable="false">
                         <p:commandButton icon="pi pi-pencil" update=":form:manage-producto-content"
@@ -111,32 +149,62 @@
                 </p:dataTable>
 
                 <p:dialog header="Detalles Producto" width="450" showEffect="fade" modal="true"
-                          widgetVar="manageProductoDialog" responsive="true">
+                          widgetVar="manageProductoDialog" responsive="true" style="overflow:auto;">
                     <p:outputPanel id="manage-producto-content" class="ui-fluid">
                         <p:outputPanel rendered="#{not empty productoCrudView.selectedProducto}">
                             <div class="p-field">
+                                <p:outputLabel for="nom">Nombre de Producto</p:outputLabel>
+                                <p:inputText id="nom" value="#{productoCrudView.selectedProducto.nombreProducto}" required="true"/>
+                            </div>
+                            <p:panelGrid columns="4">
+                                <p:outputLabel for="formF">Forma Farm.</p:outputLabel>
+                                <p:inputText id="formF" value="#{productoCrudView.selectedProducto.formaFarmaceutica}" required="true"/>
+                                <p:outputLabel for="conc">Conce.</p:outputLabel>
+                                <p:inputText id="conc" value="#{productoCrudView.selectedProducto.concentracion}" required="true"/>
+                            </p:panelGrid>
+                            <br/>
+                            <p:panelGrid columns="4">
+                                <p:outputLabel for="pres">Pres.</p:outputLabel>
+                                <p:inputText id="pres" value="#{productoCrudView.selectedProducto.presentacion}" required="true"/>
+                                <p:outputLabel for="prov">Prov.</p:outputLabel>
+                                <p:inputText id="prov" value="#{productoCrudView.selectedProducto.proveedor}" required="true"/>
+                            </p:panelGrid>
+                            <br/>
+                            <p:panelGrid columns="4">
                                 <p:outputLabel for="lote">Lote</p:outputLabel>
                                 <p:inputText id="lote" value="#{productoCrudView.selectedProducto.lote}" required="true"/>
-                            </div>
-                            <div class="p-field">
                                 <p:outputLabel for="serie">Serie</p:outputLabel>
                                 <p:inputText id="serie" value="#{productoCrudView.selectedProducto.serie}" required="true"/>
-                            </div>
-                            <div class="p-field">
-                                <p:outputLabel for="fechaCad" value="Fecha Caducidad"/>
-                                <p:datePicker id="fechaCad" value="#{productoCrudView.selectedProducto.fechaCaducidad}" required="true" />
-                            </div>
+                            </p:panelGrid>
+                            <br/>
+                            <p:panelGrid columns="4">
+                                <p:outputLabel for="fechaEla" value="Fecha Ela."/>
+                                <p:datePicker id="fechaEla" value="#{productoCrudView.selectedProducto.fechaElaboracion}" required="true" />
+                                <p:outputLabel for="fechaExp" value="Fecha Exp."/>
+                                <p:datePicker id="fechaExp" value="#{productoCrudView.selectedProducto.fechaExpiracion}" required="true" />
+                            </p:panelGrid>
                             <div class="p-field">
                                 <p:outputLabel for="registro">Registro Sanitario</p:outputLabel>
                                 <p:inputText id="registro" value="#{productoCrudView.selectedProducto.registroSanitario}" required="true"/>
                             </div>
                             <div class="p-field">
-                                <p:outputLabel for="descripcion">Descripción</p:outputLabel>
-                                <p:inputTextarea id="descripcion" value="#{productoCrudView.selectedProducto.descripcion}" required="true"/>
+                                <p:outputLabel for="entregado">Entregado Por</p:outputLabel>
+                                <p:inputText id="entregado" value="#{productoCrudView.selectedProducto.entregadoPor}" required="true"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="recibido">Recibido Por</p:outputLabel>
+                                <p:inputText id="recibido" value="#{productoCrudView.selectedProducto.recibidoPor}" required="true"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="cliente">Cliente</p:outputLabel>
+                                <p:inputText id="cliente" value="#{productoCrudView.selectedProducto.cliente}" required="true"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="obs">Observación</p:outputLabel>
+                                <p:inputTextarea id="obs" value="#{productoCrudView.selectedProducto.observacion}" required="true"/>
                             </div>
                         </p:outputPanel>
                     </p:outputPanel>
-
                     <f:facet name="footer">
                         <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{productoCrudView.save}"
                                          update="manage-producto-content" process="manage-producto-content @this"/>
@@ -153,7 +221,7 @@
                     <p:commandButton value="No" type="button" styleClass="secondary-button" icon="pi pi-times"
                                      onclick="PF('deleteProductoDialog').hide()"/>
                 </p:confirmDialog>
-                
+
                 <p:confirmDialog widgetVar="sellProductoDialog" showEffect="fade" width="300"
                                  message="Desea vender el producto?" header="Confirmación" severity="warn">
                     <p:commandButton value="Si" icon="pi pi-check" actionListener="#{productoCrudView.sell}"

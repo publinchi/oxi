@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface IUsuarioDao extends JpaRepository<Usuario, Long> {
 
-    @Query("select u from srbi_usuario u where u.login = :login")
+    @Query("select u from usuario u where u.login = :login")
     Usuario findByLogin(@Param("login") String login);
 }

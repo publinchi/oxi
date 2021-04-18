@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity(name = "srbi_usuario")
+@Entity(name = "usuario")
 public class Usuario implements Serializable {
 
     @Id
