@@ -19,7 +19,7 @@
 
     <context-param>
         <param-name>metadata.serviceBaseURI</param-name>
-        <param-value>http://localhost:8080/</param-value>
+        <param-value>http://localhost:8080/backend</param-value>
     </context-param>
 
     <welcome-file-list>
